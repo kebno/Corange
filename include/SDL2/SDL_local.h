@@ -112,11 +112,12 @@ typedef void (APIENTRY * GLPATCHPARAMETERFVFN)(GLenum pname, const GLfloat* valu
 
 typedef void (APIENTRY * GLBROKENEXTENSIONFN)();
 
-#ifndef __unix__
+#if !defined(__unix__) || !defined(__APPLE__)
   extern GLACTIVETEXTUREFN glActiveTexture;
   extern GLCOMPRESSEDTEXIMAGE2DFN glCompressedTexImage2D;
   extern GLTEXIMAGE3DFN glTexImage3D;
 #endif
+#ifndef __APPLE__
 extern GLCREATESHADERFN glCreateShader;
 extern GLCREATEPROGRAMFN glCreateProgram;
 extern GLSHADERSOURCEFN glShaderSource;
@@ -135,7 +136,6 @@ extern GLDELETESHADERFN glDeleteShader;
 extern GLDELETEPROGRAMFN glDeleteProgram;
 extern GLUSEPROGRAMFN glUseProgram;
 extern GLVERTEXATTRIBPOINTERFN glVertexAttribPointer;
-extern GLVERTEXATTRIBDIVISORFN glVertexAttribDivisor;
 extern GLENABLEVERTEXATTRIBARRAYFN glEnableVertexAttribArray;
 extern GLDISABLEVERTEXATTRIBARRAYFN glDisableVertexAttribArray;
 extern GLUNIFORM2FFN glUniform2f;
@@ -151,30 +151,33 @@ extern GLGETSHADERIVFN glGetShaderiv;
 extern GLGETPROGRAMIVFN glGetProgramiv;
 extern GLPROGRAMPARAMETERIFN glProgramParameteri;
 extern GLBINDATTRIBLOCATIONFN glBindAttribLocation;
-extern GLGENFRAMEBUFFERSFN glGenFramebuffers;
-extern GLBINDFRAMEBUFFERFN glBindFramebuffer;
 extern GLBLITFRAMEBUFFERFN glBlitFramebuffer;
 extern GLFRAMEBUFFERTEXTUREFN glFramebufferTexture;
+extern GLDELETEBUFFERSFN glDeleteBuffers;
+extern GLGENBUFFERSFN glGenBuffers;
+extern GLBINDBUFFERFN glBindBuffer;
+extern GLBUFFERDATAFN glBufferData;
+extern GLGETBUFFERSUBDATAFN glGetBufferSubData;
+extern GLGETATTRIBLOCATIONFN glGetAttribLocation;
+extern GLRENDERBUFFERSTORAGEMULTISAMPLEFN glRenderbufferStorageMultisample;
+extern GLDRAWBUFFERSFN glDrawBuffers;
+extern GLPATCHPARAMETERIFN glPatchParameteri;
+extern GLPATCHPARAMETERFVFN glPatchParameterfv;
+#endif
+
+extern GLVERTEXATTRIBDIVISORFN glVertexAttribDivisor;
+extern GLGENFRAMEBUFFERSFN glGenFramebuffers;
+extern GLBINDFRAMEBUFFERFN glBindFramebuffer;
 extern GLFRAMEBUFFERTEXTURE2DFN glFramebufferTexture2D;
 extern GLDELETEFRAMEBUFFERSFN glDeleteFramebuffers;
 extern GLCHECKFRAMEBUFFERSTATUSFN glCheckFramebufferStatus;
-extern GLGENBUFFERSFN glGenBuffers;
 extern GLGENRENDERBUFFERSFN glGenRenderbuffers;
-extern GLDELETEBUFFERSFN glDeleteBuffers;
 extern GLDELETERENDERBUFFERSFN glDeleteRenderbuffers;
-extern GLBINDBUFFERFN glBindBuffer;
 extern GLBINDRENDERBUFFERFN glBindRenderbuffer;
-extern GLBUFFERDATAFN glBufferData;
-extern GLGETBUFFERSUBDATAFN glGetBufferSubData;
 extern GLFRAMEBUFFERRENDERBUFFERFN glFramebufferRenderbuffer;
-extern GLGETATTRIBLOCATIONFN glGetAttribLocation;
 extern GLRENDERBUFFERSTORAGEFN glRenderbufferStorage;
-extern GLRENDERBUFFERSTORAGEMULTISAMPLEFN glRenderbufferStorageMultisample;
-extern GLDRAWBUFFERSFN glDrawBuffers;
 extern GLGENERATEMIPMAPFN glGenerateMipmap;
 extern GLDRAWELEMENTSINSTANCEDFN glDrawElementsInstanced;
-extern GLPATCHPARAMETERIFN glPatchParameteri;
-extern GLPATCHPARAMETERFVFN glPatchParameterfv;
 
 extern GLBROKENEXTENSIONFN glBrokenExtension;
 

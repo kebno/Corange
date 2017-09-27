@@ -5,7 +5,7 @@
 ***
 ***   This is the main component of corange and can be
 ***   considered a universal include across all files.
-***   
+***
 ***   It contains various utilities as well as
 ***   vector, matrix and geometry maths.
 **/
@@ -29,8 +29,13 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_rwops.h>
+#ifndef __APPLE__
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_net.h>
+#else
+#include <SDL2_mixer/SDL_mixer.h>
+#include <SDL2_net/SDL_net.h>
+#endif
 #include "SDL2/SDL_local.h"
 
 #ifndef MAX_PATH
@@ -78,7 +83,7 @@ char debug_str[2048];
   sprintf(error_str, "[ERROR] (%s:%s:%i) ", __FILE__, __func__, __LINE__); \
   sprintf(error_buf, MSG, ##__VA_ARGS__); strcat(error_str, error_buf); \
   error_(error_str); }
-  
+
 #define warning(MSG, ...) { \
   sprintf(warning_str, "[WARNING] (%s:%s:%i) ", __FILE__, __func__, __LINE__); \
   sprintf(warning_buf, MSG, ##__VA_ARGS__); strcat(warning_str, warning_buf); \
@@ -627,9 +632,9 @@ bool sphere_inside_frustum(sphere s, frustum f);
 bool sphere_outside_frustum(sphere s, frustum f);
 bool sphere_intersects_frustum(sphere s, frustum f);
 
-bool sphere_outside_sphere(sphere s1, sphere s2); 
-bool sphere_inside_sphere(sphere s1, sphere s2); 
-bool sphere_intersects_sphere(sphere s1, sphere s2); 
+bool sphere_outside_sphere(sphere s1, sphere s2);
+bool sphere_inside_sphere(sphere s1, sphere s2);
+bool sphere_intersects_sphere(sphere s1, sphere s2);
 
 bool point_inside_sphere(sphere s, vec3 point);
 bool point_outside_sphere(sphere s, vec3 point);
@@ -651,9 +656,9 @@ bool sphere_swept_inside_plane(sphere s, vec3 v, plane p);
 bool sphere_swept_outside_plane(sphere s, vec3 v, plane p);
 bool sphere_swept_intersects_plane(sphere s, vec3 v, plane p);
 
-bool sphere_swept_outside_sphere(sphere s1, vec3 v, sphere s2); 
-bool sphere_swept_inside_sphere(sphere s1, vec3 v, sphere s2); 
-bool sphere_swept_intersects_sphere(sphere s1, vec3 v, sphere s2); 
+bool sphere_swept_outside_sphere(sphere s1, vec3 v, sphere s2);
+bool sphere_swept_inside_sphere(sphere s1, vec3 v, sphere s2);
+bool sphere_swept_intersects_sphere(sphere s1, vec3 v, sphere s2);
 
 bool point_inside_triangle(vec3 p, vec3 v0, vec3 v1, vec3 v2);
 bool sphere_intersects_face(sphere s, vec3 v0, vec3 v1, vec3 v2, vec3 norm);

@@ -30,7 +30,7 @@ void SDL_PathFullName(char* dst, const char* path) {
 #endif
 
 void SDL_PathFileName(char* dst, const char* path) {
-  
+
   int i = strlen(path);
   int ext_loc = 0;
   while( i > 0) {
@@ -39,10 +39,10 @@ void SDL_PathFileName(char* dst, const char* path) {
     if (path[i] == '.') { ext_loc = i; }
     i--;
   }
-  
+
   const char* file = path + i + 1;
   int len = ext_loc - i - 1;
-  
+
   strncpy(dst, file, len);
   dst[len] = '\0';
 }
@@ -56,14 +56,14 @@ void SDL_PathFileExtension(char* dst, const char* path) {
     if (path[i] == '.') { break; }
     i--;
   }
-  
+
   int prev = strlen(path) - ext_len + 1;
   const char* f_ext = path + prev;
   strcpy(dst, f_ext);
 }
 
 void SDL_PathFileLocation(char* dst, const char* path) {
-  
+
   int i = strlen(path);
   while( i > 0) {
     if (path[i] == '/') { break; }
@@ -71,7 +71,7 @@ void SDL_PathFileLocation(char* dst, const char* path) {
     i--;
   }
   i++;
-  
+
   strncpy(dst, path, i);
   dst[i] = '\0';
 }
@@ -84,23 +84,23 @@ void SDL_PathParentDirectory(char* dst, const char* path) {
     if (path[i] == '\\') { break; }
     i--;
   }
-  
+
   strncpy(dst, path, i);
   dst[i] = '\0';
-  
+
 }
 
 void SDL_PathRelative(char* dst, const char* path) {
   char* curr = SDL_GetWorkingDir();
   char* sub = strstr(path, curr);
-  
+
   if (sub == NULL) {
     strcpy(dst, path);
   } else {
     strcpy(dst, ".");
     strcat(dst, path + strlen(curr));
   }
-  
+
 }
 
 void SDL_PathForwardSlashes(char* path) {
@@ -110,7 +110,7 @@ void SDL_PathForwardSlashes(char* path) {
 }
 
 void SDL_PathJoin(char* dst, char* fst, char* snd) {
-  
+
 }
 
 bool SDL_PathIsFile(char* path) {
@@ -142,7 +142,7 @@ void SDL_GL_PrintInfo() {
   const char* renderer = (const char*)glGetString(GL_RENDERER);
   const char* version = (const char*)glGetString(GL_VERSION);
   const char* shader_version = (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
-  
+
   printf("OpenGL Info\n");
   printf("Vendor: %s\n", vendor);
   printf("Renderer: %s\n", renderer);
@@ -238,11 +238,12 @@ bool SDL_GL_ExtensionFuncionLoaded(void* function) {
   }
 }
 
-#ifndef __unix__
+#if !defined(__unix__) || !defined(__APPLE__)
 GLACTIVETEXTUREFN glActiveTexture = NULL;
 GLCOMPRESSEDTEXIMAGE2DFN glCompressedTexImage2D = NULL;
 GLTEXIMAGE3DFN glTexImage3D = NULL;
 #endif
+#ifndef __APPLE__
 GLCREATESHADERFN glCreateShader = NULL;
 GLCREATEPROGRAMFN glCreateProgram = NULL;
 GLSHADERSOURCEFN glShaderSource = NULL;
@@ -261,7 +262,6 @@ GLDELETESHADERFN glDeleteShader = NULL;
 GLDELETEPROGRAMFN glDeleteProgram = NULL;
 GLUSEPROGRAMFN glUseProgram = NULL;
 GLVERTEXATTRIBPOINTERFN glVertexAttribPointer = NULL;
-GLVERTEXATTRIBDIVISORFN glVertexAttribDivisor = NULL;
 GLENABLEVERTEXATTRIBARRAYFN glEnableVertexAttribArray = NULL;
 GLDISABLEVERTEXATTRIBARRAYFN glDisableVertexAttribArray = NULL;
 GLUNIFORM2FFN glUniform2f = NULL;
@@ -277,30 +277,33 @@ GLGETSHADERIVFN glGetShaderiv = NULL;
 GLPROGRAMPARAMETERIFN glProgramParameteri = NULL;
 GLGETPROGRAMIVFN glGetProgramiv = NULL;
 GLBINDATTRIBLOCATIONFN glBindAttribLocation = NULL;
-GLGENFRAMEBUFFERSFN glGenFramebuffers = NULL;
-GLBINDFRAMEBUFFERFN glBindFramebuffer = NULL;
 GLBLITFRAMEBUFFERFN glBlitFramebuffer = NULL;
 GLFRAMEBUFFERTEXTUREFN glFramebufferTexture = NULL;
+GLDELETEBUFFERSFN glDeleteBuffers = NULL;
+GLGENBUFFERSFN glGenBuffers = NULL;
+GLBINDBUFFERFN glBindBuffer = NULL;
+GLBUFFERDATAFN glBufferData = NULL;
+GLGETBUFFERSUBDATAFN glGetBufferSubData = NULL;
+GLGETATTRIBLOCATIONFN glGetAttribLocation = NULL;
+GLRENDERBUFFERSTORAGEMULTISAMPLEFN glRenderbufferStorageMultisample = NULL;
+GLDRAWBUFFERSFN glDrawBuffers = NULL;
+GLPATCHPARAMETERIFN glPatchParameteri = NULL;
+GLPATCHPARAMETERFVFN glPatchParameterfv = NULL;
+#endif
+
+GLVERTEXATTRIBDIVISORFN glVertexAttribDivisor = NULL;
+GLGENFRAMEBUFFERSFN glGenFramebuffers = NULL;
+GLBINDFRAMEBUFFERFN glBindFramebuffer = NULL;
 GLFRAMEBUFFERTEXTURE2DFN glFramebufferTexture2D = NULL;
 GLDELETEFRAMEBUFFERSFN glDeleteFramebuffers = NULL;
 GLCHECKFRAMEBUFFERSTATUSFN glCheckFramebufferStatus = NULL;
-GLGENBUFFERSFN glGenBuffers = NULL;
 GLGENRENDERBUFFERSFN glGenRenderbuffers = NULL;
-GLDELETEBUFFERSFN glDeleteBuffers = NULL;
 GLDELETERENDERBUFFERSFN glDeleteRenderbuffers = NULL;
-GLBINDBUFFERFN glBindBuffer = NULL;
 GLBINDRENDERBUFFERFN glBindRenderbuffer = NULL;
-GLBUFFERDATAFN glBufferData = NULL;
-GLGETBUFFERSUBDATAFN glGetBufferSubData = NULL;
 GLFRAMEBUFFERRENDERBUFFERFN glFramebufferRenderbuffer = NULL;
-GLGETATTRIBLOCATIONFN glGetAttribLocation = NULL;
 GLRENDERBUFFERSTORAGEFN glRenderbufferStorage = NULL;
-GLRENDERBUFFERSTORAGEMULTISAMPLEFN glRenderbufferStorageMultisample = NULL;
-GLDRAWBUFFERSFN glDrawBuffers = NULL;
 GLGENERATEMIPMAPFN glGenerateMipmap = NULL;
 GLDRAWELEMENTSINSTANCEDFN glDrawElementsInstanced = NULL;
-GLPATCHPARAMETERIFN glPatchParameteri = NULL;
-GLPATCHPARAMETERFVFN glPatchParameterfv = NULL;
 
 GLBROKENEXTENSIONFN glBrokenExtension = NULL;
 
@@ -315,11 +318,12 @@ if (name == NULL) { \
   name = (type)SDL_GL_GetProcAddress(#name"ARB"); \
 } \
 if (name == NULL) { fprintf(stderr, "Completely failed to load OpenGL extension function '%s'. Use of this function will crash\n", #name); }
-  
+
 void SDL_GL_LoadExtensions() {
 
   /* Shaders */
-  
+
+  #ifndef __APPLE__
   SDL_GL_LoadExtension(GLCREATEPROGRAMFN, glCreateProgram);
   SDL_GL_LoadExtension(GLLINKPROGRAMFN, glLinkProgram);
   SDL_GL_LoadExtension(GLDELETEPROGRAMFN, glDeleteProgram);
@@ -327,7 +331,7 @@ void SDL_GL_LoadExtensions() {
   SDL_GL_LoadExtension(GLUSEPROGRAMFN, glUseProgram);
   SDL_GL_LoadExtension(GLGETPROGRAMIVFN, glGetProgramiv);
   SDL_GL_LoadExtension(GLPROGRAMPARAMETERIFN, glProgramParameteri);
-  
+
   SDL_GL_LoadExtension(GLCREATESHADERFN, glCreateShader);
   SDL_GL_LoadExtension(GLSHADERSOURCEFN, glShaderSource);
   SDL_GL_LoadExtension(GLCOMPILESHADERFN, glCompileShader);
@@ -338,7 +342,7 @@ void SDL_GL_LoadExtensions() {
   SDL_GL_LoadExtension(GLISPROGRAMFN, glIsProgram);
   SDL_GL_LoadExtension(GLISSHADERFN, glIsShader);
   SDL_GL_LoadExtension(GLGETATTACHEDSHADERSFN, glGetAttachedShaders);
-  
+
   SDL_GL_LoadExtension(GLGETUNIFORMLOCATIONFN, glGetUniformLocation);
   SDL_GL_LoadExtension(GLUNIFORM1FFN, glUniform1f);
   SDL_GL_LoadExtension(GLUNIFORM1IFN, glUniform1i);
@@ -351,40 +355,42 @@ void SDL_GL_LoadExtensions() {
   SDL_GL_LoadExtension(GLUNIFORM3FVFN, glUniform4fv);
   SDL_GL_LoadExtension(GLUNIFORMMATRIX3FVFN, glUniformMatrix3fv);
   SDL_GL_LoadExtension(GLUNIFORMMATRIX4FVFN, glUniformMatrix4fv);
-  
+
   /* Attributes */
-  
+
   SDL_GL_LoadExtension(GLGETATTRIBLOCATIONFN, glGetAttribLocation);
   SDL_GL_LoadExtension(GLVERTEXATTRIBPOINTERFN, glVertexAttribPointer);
   SDL_GL_LoadExtension(GLVERTEXATTRIBDIVISORFN, glVertexAttribDivisor);
   SDL_GL_LoadExtension(GLENABLEVERTEXATTRIBARRAYFN, glEnableVertexAttribArray);
   SDL_GL_LoadExtension(GLDISABLEVERTEXATTRIBARRAYFN, glDisableVertexAttribArray);
   SDL_GL_LoadExtension(GLBINDATTRIBLOCATIONFN, glBindAttribLocation);
-  
+
   /* Textures */
-  
+
   SDL_GL_LoadExtension(GLGENERATEMIPMAPFN, glGenerateMipmap);
+  #endif
   #ifndef __unix__
   SDL_GL_LoadExtension(GLACTIVETEXTUREFN, glActiveTexture);
   SDL_GL_LoadExtension(GLCOMPRESSEDTEXIMAGE2DFN, glCompressedTexImage2D);
   SDL_GL_LoadExtension(GLTEXIMAGE3DFN, glTexImage3D);
   #endif
-  
+
+  #ifndef __APPLE__
   /* Buffers */
-  
+
   SDL_GL_LoadExtension(GLGENBUFFERSFN, glGenBuffers);
   SDL_GL_LoadExtension(GLBINDBUFFERFN, glBindBuffer);
   SDL_GL_LoadExtension(GLBUFFERDATAFN, glBufferData);
   SDL_GL_LoadExtension(GLGETBUFFERSUBDATAFN, glGetBufferSubData);
   SDL_GL_LoadExtension(GLDELETEBUFFERSFN, glDeleteBuffers);
   SDL_GL_LoadExtension(GLDRAWBUFFERSFN, glDrawBuffers);
-  
+
   SDL_GL_LoadExtension(GLGENRENDERBUFFERSFN, glGenRenderbuffers);
   SDL_GL_LoadExtension(GLBINDRENDERBUFFERFN, glBindRenderbuffer);
   SDL_GL_LoadExtension(GLRENDERBUFFERSTORAGEFN, glRenderbufferStorage);
   SDL_GL_LoadExtension(GLRENDERBUFFERSTORAGEMULTISAMPLEFN, glRenderbufferStorageMultisample);
   SDL_GL_LoadExtension(GLDELETERENDERBUFFERSFN, glDeleteRenderbuffers);
-  
+
   SDL_GL_LoadExtension(GLGENFRAMEBUFFERSFN, glGenFramebuffers);
   SDL_GL_LoadExtension(GLBINDFRAMEBUFFERFN, glBindFramebuffer);
   SDL_GL_LoadExtension(GLBLITFRAMEBUFFERFN, glBlitFramebuffer);
@@ -393,20 +399,20 @@ void SDL_GL_LoadExtensions() {
   SDL_GL_LoadExtension(GLDELETEFRAMEBUFFERSFN, glDeleteFramebuffers);
   SDL_GL_LoadExtension(GLCHECKFRAMEBUFFERSTATUSFN, glCheckFramebufferStatus);
   SDL_GL_LoadExtension(GLFRAMEBUFFERRENDERBUFFERFN, glFramebufferRenderbuffer);
-  
+
   /* Tessellation */
-  
+
   SDL_GL_LoadExtension(GLPATCHPARAMETERIFN, glPatchParameteri);
   SDL_GL_LoadExtension(GLPATCHPARAMETERFVFN, glPatchParameterfv);
-  
+
   /* Misc */
-  
+
   SDL_GL_LoadExtension(GLDRAWELEMENTSINSTANCEDFN, glDrawElementsInstanced);
-  
+  #endif
   /* Test for missing Extension */
-  
+
   //SDL_GL_LoadExtension(GLBROKENEXTENSIONFN, glBrokenExtension);
-  
+
 }
 
 #ifdef __unix__
@@ -429,7 +435,7 @@ void SDL_PrintStackTrace() {
 
   context.ContextFlags = CONTEXT_CONTROL;
   GetThreadContext(thread, &context);
-  
+
 	ZeroMemory(&stackframe, sizeof(STACKFRAME64));
 	stackframe.AddrPC.Offset = context.Eip;
 	stackframe.AddrPC.Mode = AddrModeFlat;
@@ -442,13 +448,13 @@ void SDL_PrintStackTrace() {
 
 	while (walking) {
 		walking = StackWalk64(
-      IMAGE_FILE_MACHINE_I386, process, thread, 
-      &stackframe, &context, 
+      IMAGE_FILE_MACHINE_I386, process, thread,
+      &stackframe, &context,
       NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL);
 
 		unsigned char buffer[sizeof(IMAGEHLP_SYMBOL64) + 256];
 		PIMAGEHLP_SYMBOL64 symbol = (PIMAGEHLP_SYMBOL64)&buffer;
-		
+
 		ZeroMemory(symbol, sizeof(IMAGEHLP_SYMBOL64) + 256);
 		symbol->SizeOfStruct = sizeof(IMAGEHLP_SYMBOL64);
 		symbol->MaxNameLength = 256;
@@ -462,12 +468,10 @@ void SDL_PrintStackTrace() {
       printf("[STACK] ???\n");
     }
 	}
-	
+
 	SymCleanup(process);
   */
 
 }
 
 #endif
-
-
