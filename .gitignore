@@ -10,3 +10,5 @@ libcorange.a
 stdout.txt
 stderr.txt
 *.dSYM
+.DS_Store
+*.swp

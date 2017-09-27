@@ -65,6 +65,8 @@ config* cfg_load_file(const char* filename) {
   
 }
 
+
+/*
 void cfg_save_file(config* c, const char* filename) {
   
   SDL_RWops* file = SDL_RWFromFile(filename, "w");
@@ -72,7 +74,7 @@ void cfg_save_file(config* c, const char* filename) {
     error("Cannot load file %s", filename);
   }
   
-  void write_entry(void* x) {
+  auto void write_entry(void* x) {
     char* val = x;
     char* key = dict_find(c->entries, val);
   
@@ -87,6 +89,7 @@ void cfg_save_file(config* c, const char* filename) {
   SDL_RWclose(file);
   
 }
+*/
 
 void config_delete(config* c) {
   dict_map(c->entries, free);

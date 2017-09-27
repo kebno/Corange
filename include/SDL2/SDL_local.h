@@ -169,7 +169,7 @@ extern GLVERTEXATTRIBDIVISORFN glVertexAttribDivisor;
 extern GLGENFRAMEBUFFERSFN glGenFramebuffers;
 extern GLBINDFRAMEBUFFERFN glBindFramebuffer;
 extern GLFRAMEBUFFERTEXTURE2DFN glFramebufferTexture2D;
-extern GLDELETEFRAMEBUFFERSFN glDeleteFramebuffers;
+//extern GLDELETEFRAMEBUFFERSFN glDeleteFramebuffers;
 extern GLCHECKFRAMEBUFFERSTATUSFN glCheckFramebufferStatus;
 extern GLGENRENDERBUFFERSFN glGenRenderbuffers;
 extern GLDELETERENDERBUFFERSFN glDeleteRenderbuffers;

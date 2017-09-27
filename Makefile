@@ -4,8 +4,10 @@ AR=ar
 SRC = $(wildcard src/*.c) $(wildcard src/*/*.c)
 OBJ = $(addprefix obj/,$(notdir $(SRC:.c=.o)))
 
+OBJ += glad.o
+
 CFLAGS = -I ./include -std=gnu99 -Wall -Werror -Wno-unused -O3 -g
-LFLAGS = -shared -g
+LDFLAGS = -shared -g
 
 PLATFORM = $(shell uname)
 
@@ -19,8 +21,8 @@ endif
 ifeq ($(findstring Darwin,$(PLATFORM)),Darwin)
 	DYNAMIC = libcorange.so
 	STATIC = libcorange.a
-	CFLAGS += -ISDL2 -ISDL2_mixer -ISDL2_net -fPIC -D__unix__=1
-	LFLAGS += -framework SDL2 -framework SDL2_net -framework SDL2_mixer -framework OpenGL
+	CFLAGS += -I./glad/include -I/Users/john/sw/include -fPIC -D__unix__=1
+    LDFLAGS += -L/Users/john/sw/lib -L./glad/src -lSDL2 -lSDL2_net -lSDL2_mixer -framework OpenGL
 endif
 
 ifeq ($(findstring MINGW,$(PLATFORM)),MINGW)
@@ -34,7 +36,7 @@ endif
 all: $(DYNAMIC) $(STATIC)
 
 $(DYNAMIC): $(OBJ)
-	$(CC) $(OBJ) $(LFLAGS) -o $@
+	$(CC) $(OBJ) $(LDFLAGS) $( -o $@ $(CFLAGS)
 
 $(STATIC): $(OBJ)
 	$(AR) rcs $@ $(OBJ)
@@ -47,6 +49,9 @@ obj/%.o: src/*/%.c | obj
 
 obj:
 	mkdir obj
+
+glad.o: glad/src/glad.c
+	${CC} ${CFLAGS} -c $^ -o $@
 
 corange.res: corange.rc
 	windres $< -O coff -o $@

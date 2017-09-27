@@ -65,7 +65,7 @@ void ui_textbox_addchar(ui_textbox* tb, char c) {
   
   char* temp = malloc(strlen(curr) + 2);
   strcpy(temp, curr);
-  strcat(temp, (char[]){c, 0});
+  strcat(temp, ((char[]){c, 0}));
   
   ui_textbox_set_contents(tb, temp);
   

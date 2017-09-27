@@ -26,6 +26,9 @@
 #include <float.h>
 
 /* SDL includes */
+#include "glad/glad.h"
+
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_rwops.h>
@@ -33,8 +36,8 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_net.h>
 #else
-#include <SDL2_mixer/SDL_mixer.h>
-#include <SDL2_net/SDL_net.h>
+#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_net.h>
 #endif
 #include "SDL2/SDL_local.h"
 
