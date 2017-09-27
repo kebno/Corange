@@ -35,11 +35,11 @@ endif
 
 all: $(DYNAMIC) $(STATIC)
 
-$(DYNAMIC): $(OBJ)
-	$(CC) $(OBJ) $(LDFLAGS) $( -o $@ $(CFLAGS)
+$(DYNAMIC): $^
+	$(CC) $^ $(LDFLAGS) -o $@ $(CFLAGS)
 
 $(STATIC): $(OBJ)
-	$(AR) rcs $@ $(OBJ)
+	$(AR) rcs $@ $^
 
 obj/%.o: src/%.c | obj
 	$(CC) $< -c $(CFLAGS) -o $@
