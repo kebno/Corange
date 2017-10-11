@@ -155,6 +155,7 @@ void SDL_GL_PrintExtensions() {
   printf("OpenGL Extensions: %s\n", extensions);
 }
 
+
 static const char* gl_error_string_invalid_enum = "Invalid Enum";
 static const char* gl_error_string_invalid_value = "Invalid Value";
 static const char* gl_error_string_invalid_operation = "Invalid Operation";
@@ -237,6 +238,8 @@ bool SDL_GL_ExtensionFuncionLoaded(void* function) {
     return true;
   }
 }
+
+#if 0
 
 #if !defined(__unix__) || !defined(__APPLE__)
 GLACTIVETEXTUREFN glActiveTexture = NULL;
@@ -414,6 +417,8 @@ void SDL_GL_LoadExtensions() {
   //SDL_GL_LoadExtension(GLBROKENEXTENSIONFN, glBrokenExtension);
 
 }
+
+#endif
 
 #ifdef __unix__
 
