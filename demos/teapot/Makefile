@@ -1,7 +1,7 @@
 DEMO=teapot
 CC=gcc
 
-CFLAGS= -I../../include -std=gnu99 -Wall -Werror -Wno-unused -O3 -g
+CFLAGS += -I../../include -I../../glad/include -I/Users/john/sw/include -std=gnu99 -Wall -Werror -Wno-unused -O3 -g
 
 PLATFORM = $(shell uname)
 
@@ -12,7 +12,7 @@ endif
 
 ifeq ($(findstring Darwin,$(PLATFORM)),Darwin)
 	OUT=$(DEMO)
-	LFLAGS= -lcorange -lGL -lSDL2main -lSDL2 -lSDL2_net -lSDL2_mixer
+	LFLAGS= -L/Users/john/sw/lib -lcorange -lSDL2main -lSDL2 -lSDL2_net -lSDL2_mixer -framework OpenGL
 endif
 
 ifeq ($(findstring MINGW,$(PLATFORM)),MINGW)
@@ -21,8 +21,8 @@ ifeq ($(findstring MINGW,$(PLATFORM)),MINGW)
 endif
 
 $(OUT): teapot.c
-	$(CC) $< $(CFLAGS) $(LFLAGS) -o $@
-	
+	$(CC) $^ ../../glad.o $(CFLAGS) $(LFLAGS) -o $@
+
 clean:
-	rm $(OUT)
+	rm -f $(OUT)
 
