@@ -1,4 +1,3 @@
-CC=gcc
 AR=ar
 
 SRC = $(wildcard src/*.c) $(wildcard src/*/*.c)
@@ -6,7 +5,7 @@ OBJ = $(addprefix obj/,$(notdir $(SRC:.c=.o)))
 
 OBJ += glad.o
 
-CFLAGS = -I ./include -std=gnu99 -Wall -Werror -Wno-unused -O3 -g
+CFLAGS = -I ./include -std=gnu99 -Wall -Werror -Wno-unused -O3 -g -Wl,-no_compact_unwind
 LDFLAGS = -shared -g
 
 PLATFORM = $(shell uname)
@@ -59,8 +58,8 @@ corange.res: corange.rc
 clean:
 	rm $(OBJ) $(STATIC) $(DYNAMIC)
 
-install_unix: $(STATIC)
-	cp $(STATIC) /usr/local/lib/$(STATIC)
+install: $(STATIC)
+	cp $(STATIC) /Users/john/sw/lib/$(STATIC)
 
 install_win32: $(STATIC)
 	cp $(STATIC) C:/MinGW/lib/$(STATIC)
